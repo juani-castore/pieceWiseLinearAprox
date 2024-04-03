@@ -29,7 +29,8 @@ def main():
 	
 	print(best['sol'])
 
-	aproxPWL(best, [], grid_x, grid_y, instance)
+	actual = []
+	aproxPWL(best, actual, grid_x, grid_y, instance)
 
 	# Posible ejemplo (para la instancia titanium) de formato de solucion, y como exportarlo a JSON.
 	# La solucion es una lista de tuplas (i,j), donde:
