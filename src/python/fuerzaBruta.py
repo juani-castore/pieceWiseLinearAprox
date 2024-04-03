@@ -20,18 +20,24 @@ def rectaEnX(x:int, pt1:Punto, pt2:Punto ):
     y = pt1.y - m * pt1.x
     return y
 
-
+'''
 def distancia(x:int, y:int , actual:list, grid_x, grid_y):
+    
+    
+    
     for i in range(len(actual)-1):
         if i>=x:
             return abs(y-rectaEnX(x, Punto(grid_x[i],grid_y[actual[i]]), Punto(grid_x[i+1], grid_y[actual[i+1]]))) # aca le pasamos el valor de x_obs y 
+'''
 
 def error(actual, grid_x,grid_y, instance):
     sum=0
-    for i in range(instance["n"]-1):
-        print(instance["x"][i])
-        print(instance["y"][i])
-        sum=sum+distancia(instance["x"][i], instance["y"][i],actual, grid_x, grid_y)
+    for j in range(len(actual)-1):
+        for i in range(instance["n"]-1):
+            
+            while( instance["x"][i] >= grid_x[j] and instance["x"][i] < grid_x[j+1]):
+                sum=sum+distancia(instance["x"][i], instance["y"][i],actual, grid_x, grid_y)
+
     return sum
 
 def aproxPWL(best:dict , actual:list, grid_x,grid_y, instance): #instance:datos obs
