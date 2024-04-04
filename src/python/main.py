@@ -21,6 +21,12 @@ def main():
 	grid_x = np.linspace(min(instance["x"]), max(instance["x"]), num=m, endpoint=True)
 	grid_y = np.linspace(min(instance["y"]), max(instance["y"]), num=n, endpoint=True)
 
+	print(grid_y)
+	print("hola")
+	print(len(grid_y))
+	print("chau")
+
+
 	# TODO: aca se deberia ejecutar el algoritmo.
 
 	best = {}
@@ -29,7 +35,8 @@ def main():
 	
 	print(best['sol'])
 
-	aproxPWL(best, [], grid_x, grid_y, instance)
+	actual = []
+	aproxPWL(best, actual, grid_x, grid_y, instance)
 
 	# Posible ejemplo (para la instancia titanium) de formato de solucion, y como exportarlo a JSON.
 	# La solucion es una lista de tuplas (i,j), donde:
