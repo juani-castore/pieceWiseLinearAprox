@@ -20,6 +20,8 @@ def rectaEnX(x:int, pt1:Punto, pt2:Punto ):
     y = pt1.y - m * pt1.x
     return y
 
+
+
 # en que celda esta el punto?
 
 def distancia(x:int, y:int , actual:list, grid_x, grid_y, k:int):
@@ -35,7 +37,6 @@ def error(actual, grid_x,grid_y, instance):
         print(instance["x"][i])
         print(instance["y"][i])
         sum=sum+distancia(instance["x"][i], instance["y"][i],actual, grid_x, grid_y, i)
-    return sum
 
 def aproxPWL(best:dict , actual:list, grid_x,grid_y, instance): #instance:datos obs
     print(actual)
@@ -55,9 +56,6 @@ def aproxPWL(best:dict , actual:list, grid_x,grid_y, instance): #instance:datos 
             actual.append(i)
             aproxPWL(best, actual, grid_x,grid_y, instance)
             actual.pop()
-            
-            
-            
 
 
 
