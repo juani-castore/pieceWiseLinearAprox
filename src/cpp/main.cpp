@@ -2,9 +2,12 @@
 #include <iostream>
 #include <fstream>
 #include "include/json.hpp"
+#include "FuerzaBruta.h"
+//#include "FuerzaBruta.cpp"
 
 // Para libreria de JSON.
 using namespace nlohmann;
+using namespace std;
 
 int main(int argc, char** argv) {
     std::string instance_name = "../../data/titanium.json";
@@ -16,13 +19,24 @@ int main(int argc, char** argv) {
     input.close();
 
     int K = instance["n"];
-    int m = 6;
-    int n = 6;
-    int N = 5;
+    int m = 4;
+    int n = 4;
+    int N = 3;
 
-    std::cout << K << std::endl;
+    SolPosible sol=SolPosible();
+    Best b= Best(sol);
+    Grilla grilla= Grilla(m,n,instance["x"][0],instance["x"][K-1], minimo(instance["y"]),maximo(instance["y"]));
+    
+    //aproxPWL(b, sol, instance["x"], instance["y"], grilla, N);
+    aproxPWL_BT(b, sol, instance["x"], instance["y"], grilla, N);
 
-    // Aca empieza la magia.
+    cout << "Best solution: " << endl
+            << "Error: " << b.best.error << endl
+            << "Size: " << b.best.sol.size() << endl;
+    for (int i = 0; i < b.best.sol.size(); i++) {
+        cout << "Punto " << i << ": (" << b.best.sol[i].x << ", " << b.best.sol[i].y << ")" << endl;
+    }
+
 
     // Ejemplo para guardar json.
     // Probamos guardando el mismo JSON de instance, pero en otro archivo.

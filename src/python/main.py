@@ -1,8 +1,10 @@
 import json
 import numpy as np
-from fuerzaBruta import *
+from FuerzaBruta import *
+from BackTracking import *
+import time
 
-BIG_NUMBER = 1e10 # Revisar si es necesario.
+BIG_NUMBER = 1000000000000000000 # Revisar si es necesario.
 
 def main():
 
@@ -12,31 +14,32 @@ def main():
 	with open(filename) as f:
 		instance = json.load(f)
 	
-	K = instance["n"] # Cantidad de puntos de la instancia
-	m = 6 # tamaño del eje x de la grilla
-	n = 6 # tamaño del eje y de la grilla
-	N = 5 # Cantidad de breakpoints
+	K = instance["n"]
+	m = 4
+	n = 4
+	N = 3 #Cantidad de segmentos. 
 	
 	# Ejemplo para definir una grilla de m x n.
 	grid_x = np.linspace(min(instance["x"]), max(instance["x"]), num=m, endpoint=True)
 	grid_y = np.linspace(min(instance["y"]), max(instance["y"]), num=n, endpoint=True)
 
-	print(grid_y)
-	print("hola")
-	print(len(grid_y))
-	print("chau")
-
 
 	# TODO: aca se deberia ejecutar el algoritmo.
 
 	best = {}
-	best['sol'] = [None]*(N+1) # [(none), (none), (none), (none), (none), (none)]
-	best['obj'] = BIG_NUMBER  #{error total?} numero muy grande para empezar comparando
+	best['sol'] = [None]*(N+1)
+	best['obj'] = BIG_NUMBER
 	
-	print(best['sol'])
 
 	actual = []
-	aproxPWL(best, actual, grid_x, grid_y, instance)
+	tiempoInitiFB = time.time()
+	aproxPWL_2(best, actual, grid_x, grid_y, instance)
+	tiempoFinFB= time.time()
+	print(str(abs(tiempoInitiFB-tiempoFinFB)) + ":tiempo de BT")
+	print(best)
+
+
+
 
 	# Posible ejemplo (para la instancia titanium) de formato de solucion, y como exportarlo a JSON.
 	# La solucion es una lista de tuplas (i,j), donde:
@@ -59,7 +62,6 @@ def main():
 	with open('solution_' + instance_name, 'w') as f:
 		json.dump(solution, f)
 
-
-
+	
 if __name__ == "__main__":
 	main()
