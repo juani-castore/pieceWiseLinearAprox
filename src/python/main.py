@@ -2,6 +2,7 @@ import json
 import numpy as np
 from FuerzaBruta import *
 from BackTracking import *
+from ProgramDinam import *
 import time
 
 BIG_NUMBER = 1000000000000000000 # Revisar si es necesario.
@@ -15,9 +16,9 @@ def main():
 		instance = json.load(f)
 	
 	K = instance["n"]
-	m = 4
-	n = 4
-	N = 3 #Cantidad de segmentos. 
+	m = 3
+	n = 3
+	N = 2 #Cantidad de segmentos. 
 	
 	# Ejemplo para definir una grilla de m x n.
 	grid_x = np.linspace(min(instance["x"]), max(instance["x"]), num=m, endpoint=True)
@@ -33,10 +34,12 @@ def main():
 
 	actual = []
 	tiempoInitiFB = time.time()
-	aproxPWL_2(best, actual, grid_x, grid_y, instance)
+	#aproxPWL_2(best, actual, grid_x, grid_y, instance)
+	matriz = ProgramDinam(N,grid_x,grid_y,instance)
 	tiempoFinFB= time.time()
 	print(str(abs(tiempoInitiFB-tiempoFinFB)) + ":tiempo de BT")
-	print(best)
+	#print(best)
+	print(matriz)
 
 
 
@@ -52,15 +55,15 @@ def main():
 	# - n: cantidad de breakpoints
 	# - x: lista con las coordenadas de la abscisa para cada breakpoint
 	# - y: lista con las coordenadas de la ordenada para cada breakpoint
-	solution = {}
+	""" solution = {}
 	solution['n'] = len(best['sol'])
 	solution['x'] = [grid_x[x[0]] for x in best['sol']]
 	solution['y'] = [grid_y[x[1]] for x in best['sol']]
-	solution['obj'] = best['obj']
+	solution['obj'] = best['obj'] """
 
-	# Se guarda el archivo en formato JSON
+	""" # Se guarda el archivo en formato JSON
 	with open('solution_' + instance_name, 'w') as f:
-		json.dump(solution, f)
+		json.dump(solution, f) """
 
 	
 if __name__ == "__main__":
