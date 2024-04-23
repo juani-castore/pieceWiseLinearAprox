@@ -6,7 +6,7 @@
 
 using namespace std;
 
-bool SolPosible::vaSerFactible(){
+bool SolPosible::vaSerFactible(){ // si la solucion parcial es factible
     bool res = true;
     if (this->sol.size() <= 1)
     {  // si esta vacia o tiene un solo pto (0, algo) entonces puede ser factible
@@ -31,7 +31,8 @@ bool SolPosible::vaSerFactible(){
     
 
 float calcularErrorBT(vector<float> x, vector<float> y, Grilla& grilla, Best& best, SolPosible& actual) {
-    float error = abs(y[0] - grilla.y[actual.sol[0].y]); //comenzamos calculando el e[0] porque el for no lo toma en cuenta
+    // Adecuamos la funcion de FB para  poder calcular el error en solucion parciales y tambien completas
+    float error = abs(y[0] - grilla.y[actual.sol[0].y]);
     for (int i = 0; i < actual.sol.size()-1; i++)
     {
         for (int j = 0; j < x.size(); j++)
@@ -57,6 +58,7 @@ float calcularErrorBT(vector<float> x, vector<float> y, Grilla& grilla, Best& be
 
 void aproxPWL_BT(Best& best, SolPosible actual, vector<float> x_obs, vector<float> y_obs, Grilla& grilla, int k) {
     //K segmentos. K+1 Breakpoints
+    //Caso Base
     if(actual.sol.size()==k+1 && actual.esFactible(grilla, k+1)){
         actual.calcularError(x_obs, y_obs, grilla);
         if(actual.error<best.best.error){
@@ -64,10 +66,8 @@ void aproxPWL_BT(Best& best, SolPosible actual, vector<float> x_obs, vector<floa
             best.best.error=actual.error;
         }
     }
-    else if(actual.sol.size()==k+1 || ( best.best.error < 1000000000 && actual.sol.size() >= 2 && (calcularErrorBT(x_obs, y_obs, grilla, best, actual) > best.best.error))){
-        // poda de optimalidad 2 
-        // si el error actual se pasa, corto la recursion
-    }
+    //Cortamos la recursion cuando: ya usamos los breakpoints disponibles, o si el error actual es mayor al mejor error encontrado hasta ahora (poda optimalidad)
+    else if(actual.sol.size()==k+1 || ( best.best.error < 1000000000 && actual.sol.size() >= 2 && (calcularErrorBT(x_obs, y_obs, grilla, best, actual) > best.best.error))){}
     else if (!actual.vaSerFactible()){} // poda de factibilidad
     else{
         for (int i = 0; i < grilla.x.size(); i++){

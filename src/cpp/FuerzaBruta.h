@@ -7,7 +7,8 @@
 #include <vector>
 #include <unordered_map>
 #include <utility>
-//using namespace std;
+#include <tuple>
+using namespace std;
 
 
 class Punto {
@@ -29,7 +30,6 @@ class SolPosible {
 public:
     std::vector<Punto> sol;
     float error;
-    //int tamanio;
 
 
     SolPosible();
@@ -43,7 +43,6 @@ public:
 class Best {
 public:
     SolPosible best;
-    //float error;
     Best(SolPosible sol);
 };
 
@@ -54,5 +53,12 @@ float rectaEnX(float x, float x1, float y1, float x2, float y2);
 float maximo(std::vector<float> x);
 float minimo(std::vector<float> x);
 float calcularErrorBT(std::vector<float> x, std::vector<float> y, Grilla& grilla, Best& best, SolPosible& actual);
+vector<vector<float>> matrizNivelErrores(vector<float> grid_x, vector<float> grid_y);
+vector<vector<tuple<int,int>>> matrizNivelVuelta(vector<float> grid_x, vector<float> grid_y);
+void programDinam(Best& best,int cantidadSegmentos, vector<float> grid_x, vector<float> grid_y, vector<float> xObs, vector<float> yObs);
+void programDinamKN (int cantidadSegmentos, vector<float> grid_x, vector<float> grid_y, vector<float> xObs, vector<float> yObs, vector<vector<vector<float>>> & matriz, vector<vector<vector<tuple<int,int>>>> & matrizVuelta);
+void programDinamK1 (vector<float> grid_x, vector<float> grid_y, vector<float> xObs, vector<float> yObs, vector<vector<vector<float>>> & matriz, vector<vector<vector<tuple<int,int>>>> & matrizVuelta);
+float error_pd(int n, int m, int i, int j, vector<float> grid_x, vector<float> grid_y, vector<float> xObs, vector<float> yObs);
+vector<tuple<int,int>> recCamino(vector<vector<vector<float>>> & matriz, vector<vector<vector<tuple<int,int>>>> & matriz_vuelta, vector<float> grid_x, vector<float> grid_y, int cantidadSegmentos);
 
 #endif // __FuerzaBruta_H__
